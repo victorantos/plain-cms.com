@@ -1,37 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" width="720" height="430" role="img" aria-label="The plain admin: a split-pane Markdown editor with a live preview and AI assist buttons.">
   <style>
     text { font-family: -apple-system, Segoe UI, Roboto, sans-serif; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #8b8f9a; }
-    .muted { fill: #6b6f7a; font-size: 11px; }
-    .field { fill: #cfd2da; font-size: 13px; }
-    .prose { fill: #c7cad3; font-size: 12px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #9aa0ad; }
+    .muted { fill: #7a808d; font-size: 11px; }
+    .field { fill: #d7dae2; font-size: 13px; }
+    .prose { fill: #cfd2db; font-size: 12px; }
   </style>
-  <rect x="6" y="6" width="708" height="418" rx="14" fill="#14161b" stroke="#2b2e37"/>
+  <defs>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <!-- window -->
+  <rect x="8" y="6" width="704" height="414" rx="14" fill="#232630" stroke="#454b59" filter="url(#sh)"/>
   <!-- top bar -->
-  <text x="30" y="42" font-size="17" font-weight="700" fill="#e8eaf0">New post</text>
-  <rect x="494" y="22" width="96" height="30" rx="8" fill="none" stroke="#3a3d46"/>
-  <text x="542" y="42" font-size="12" fill="#b8bcc6" text-anchor="middle">Save draft</text>
+  <text x="30" y="42" font-size="17" font-weight="700" fill="#eef0f5">New post</text>
+  <rect x="494" y="22" width="96" height="30" rx="8" fill="none" stroke="#4a505e"/>
+  <text x="542" y="42" font-size="12" fill="#c4c8d2" text-anchor="middle">Save draft</text>
   <rect x="600" y="22" width="86" height="30" rx="8" fill="#6f6ff0"/>
   <text x="643" y="42" font-size="12" font-weight="600" fill="#fff" text-anchor="middle">Publish</text>
-  <line x1="6" y1="62" x2="714" y2="62" stroke="#23252d"/>
+  <line x1="8" y1="62" x2="712" y2="62" stroke="#353a45"/>
   <!-- fields -->
   <text x="30" y="86" class="muted">Title</text>
-  <rect x="30" y="92" width="316" height="32" rx="7" fill="#1b1d23" stroke="#2b2e37"/>
+  <rect x="30" y="92" width="316" height="32" rx="7" fill="#161820" stroke="#353a45"/>
   <text x="44" y="113" class="field">On keeping a quiet website</text>
   <text x="364" y="86" class="muted">Date</text>
-  <rect x="364" y="92" width="150" height="32" rx="7" fill="#1b1d23" stroke="#2b2e37"/>
+  <rect x="364" y="92" width="150" height="32" rx="7" fill="#161820" stroke="#353a45"/>
   <text x="378" y="113" class="field">2026-07-06</text>
   <!-- toolbar -->
-  <g fill="#1b1d23" stroke="#2b2e37">
+  <g fill="#161820" stroke="#353a45">
     <rect x="30" y="140" width="28" height="26" rx="6"/><rect x="64" y="140" width="28" height="26" rx="6"/>
     <rect x="98" y="140" width="28" height="26" rx="6"/><rect x="132" y="140" width="28" height="26" rx="6"/>
   </g>
-  <g fill="#b8bcc6" font-size="12" text-anchor="middle">
+  <g fill="#c4c8d2" font-size="12" text-anchor="middle">
     <text x="44" y="158" font-weight="700">B</text><text x="78" y="158" font-style="italic">I</text>
     <text x="112" y="158" font-weight="700">H</text><text x="146" y="158">🔗</text>
   </g>
   <!-- editor pane -->
-  <rect x="30" y="180" width="322" height="196" rx="8" fill="#17191f"/>
+  <rect x="30" y="180" width="322" height="196" rx="8" fill="#14161d"/>
   <g class="mono">
     <text x="44" y="204">## Less to maintain</text>
     <text x="44" y="230">A static site has almost</text>
@@ -43,21 +49,21 @@
     <text x="44" y="352">- Plain HTML, no JS needed</text>
   </g>
   <!-- preview pane -->
-  <rect x="366" y="180" width="322" height="196" rx="8" fill="#1b1d23"/>
-  <text x="382" y="208" font-size="15" font-weight="700" fill="#e8eaf0">Less to maintain</text>
+  <rect x="366" y="180" width="322" height="196" rx="8" fill="#14161d"/>
+  <text x="382" y="208" font-size="15" font-weight="700" fill="#eef0f5">Less to maintain</text>
   <g class="prose">
     <text x="382" y="234">A static site has almost nothing</text>
     <text x="382" y="252">that can rot. You write, you</text>
     <text x="382" y="270">commit, it publishes.</text>
   </g>
-  <g fill="#c7cad3" font-size="12">
-    <circle cx="388" cy="302" r="2" fill="#6f6ff0"/><text x="400" y="306">Markdown you can read</text>
-    <circle cx="388" cy="324" r="2" fill="#6f6ff0"/><text x="400" y="328">Every version, restorable</text>
-    <circle cx="388" cy="346" r="2" fill="#6f6ff0"/><text x="400" y="350">Plain HTML, no JS needed</text>
+  <g fill="#cfd2db" font-size="12">
+    <circle cx="388" cy="302" r="2" fill="#8f8ff5"/><text x="400" y="306">Markdown you can read</text>
+    <circle cx="388" cy="324" r="2" fill="#8f8ff5"/><text x="400" y="328">Every version, restorable</text>
+    <circle cx="388" cy="346" r="2" fill="#8f8ff5"/><text x="400" y="350">Plain HTML, no JS needed</text>
   </g>
   <!-- AI chips -->
-  <rect x="30" y="388" width="140" height="26" rx="13" fill="#1b1d23" stroke="#2b2e37"/>
-  <text x="46" y="405" font-size="11" fill="#b8bcc6">✨ Improve writing</text>
-  <rect x="180" y="388" width="126" height="26" rx="13" fill="#1b1d23" stroke="#2b2e37"/>
-  <text x="196" y="405" font-size="11" fill="#b8bcc6">✨ Suggest title</text>
+  <rect x="30" y="388" width="140" height="26" rx="13" fill="#161820" stroke="#353a45"/>
+  <text x="46" y="405" font-size="11" fill="#c4c8d2">✨ Improve writing</text>
+  <rect x="180" y="388" width="126" height="26" rx="13" fill="#161820" stroke="#353a45"/>
+  <text x="196" y="405" font-size="11" fill="#c4c8d2">✨ Suggest title</text>
 </svg>
