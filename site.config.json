@@ -1,10 +1,10 @@
 {
   "site": {
-    "title": "plain \u2014 sample site",
+    "title": "plain",
     "url": "https://plain-cms.com",
-    "repo": "plain-cms/plain",
+    "repo": "victorantos/plain-cms.com",
     "oauthUrl": "https://plain-oauth.victorantos.workers.dev",
-    "description": "The sample site that ships with plain, the Git-native CMS.",
+    "description": "A calm, Git-native CMS. Your content is Markdown in Git; your site is a fast static build. No database, no lock-in.",
     "language": "en",
     "theme": "default"
   },

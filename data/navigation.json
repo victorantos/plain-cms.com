@@ -4,19 +4,19 @@
     "url": "/"
   },
   {
-    "label": "Blog",
-    "url": "/blog/"
-  },
-  {
     "label": "About",
     "url": "/about/"
   },
   {
-    "label": "Contact",
-    "url": "/contact/"
+    "label": "Blog",
+    "url": "/blog/"
   },
   {
     "label": "Search",
     "url": "/search/"
+  },
+  {
+    "label": "GitHub",
+    "url": "https://github.com/plain-cms/plain"
   }
 ]
