@@ -16,6 +16,14 @@ Your content is ordinary Markdown files in a Git repository. Your settings are o
 - **Nothing to run.** No server, no database, no monthly bill for a box that mostly sits idle. It hosts anywhere static files live.
 - **Edit how you like.** Write in your editor and commit, or use the browser admin — every save is just a commit, with full history and one-click restore.
 
+## See it while you write
+
+The browser admin is a Markdown editor with a live preview beside it — plus media uploads, drafts, full version history, and optional AI help for titles and tidying prose. Underneath, it is only ever writing commits, so everything stays in your repository.
+
+![The plain admin — Markdown on the left, a live preview on the right, with optional AI assist.](/media/2026/07/admin-editor.svg)
+
+Or skip it entirely and edit the files in your own editor. Both write to the same place; the files are always the source of truth.
+
 ## Boring on purpose
 
 There is no clever framework here, no build that needs rewriting every year. plain does a small number of things and expects to still be doing them a decade from now. Boring is what survives.
