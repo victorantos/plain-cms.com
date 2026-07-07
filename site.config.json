@@ -6,7 +6,10 @@
     "oauthUrl": "https://plain-oauth.victorantos.workers.dev",
     "description": "A calm, Git-native CMS. Your content is Markdown in Git; your site is a fast static build. No database, no lock-in.",
     "language": "en",
-    "theme": "default"
+    "theme": "default",
+    "favicon": "/media/brand/favicon.svg",
+    "appleTouchIcon": "/media/brand/apple-touch-icon.png",
+    "socialImage": "/media/brand/og-image.png"
   },
   "collections": {
     "pages": {

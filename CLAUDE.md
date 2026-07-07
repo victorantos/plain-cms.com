@@ -240,3 +240,7 @@ Every error message must name the file (and line where possible), say what is wr
 ## Style
 
 Boring, explicit code beats clever code. Match the existing voice: small pure functions, JSDoc where types help, comments only for constraints the code can't express. Future readers include AI agents and curious non-experts.
+
+## This site (plain-cms.com specifics)
+
+This repo is the live plain-cms.com site — an instance of the plain template — and the home of the product's **brand kit** in `assets/` (SVG masters + `node assets/generate.js`; rasters in `assets/generated/`; palette, rules, and the platform upload map in `assets/README.md`). The generator also refreshes `media/brand/`, which the `site.favicon` / `site.appleTouchIcon` / `site.socialImage` keys in `site.config.json` point at. Engine updates arrive as PRs from the "Update engine" workflow — never hand-edit engine files here.
