@@ -61,6 +61,8 @@ Set `draft: true` and the post is saved but not published. Pages work the same i
 First sign in and the admin greets you with a five-step wizard: pick what you're building, name it, see it (a live preview already wearing your name), write your first words, and go live. Under the hood it applies a **starter** — a theme plus the right content types, menu, and example content.
 
 Five starters ship in the box: **Journal** (blog), **Toolbox** (trades & local services), **Studio** (portfolio), **Bistro** (restaurant), and **Manual** (documentation). The Appearance screen lets you try any of them on *your own pages* — with device widths and a light/dark toggle — before committing, and a customizer exposes each theme's colors and fonts as live controls. Your tweaks survive theme updates.
+<img width="1171" height="1063" alt="image" src="https://github.com/user-attachments/assets/3efb0b56-5d5b-42c3-a136-9a637c287052" />
+
 
 ## Plugins
 
