@@ -72,6 +72,7 @@
   "plugins": [
     "stamp"
   ],
+  "services": {},
   "navigation": [
     {
       "label": "Home",
