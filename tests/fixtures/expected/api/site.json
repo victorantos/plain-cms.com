@@ -27,6 +27,7 @@
           "default": false
         }
       ],
+      "render": true,
       "sortOrder": "desc",
       "pageSize": 10,
       "label": "Pages"
@@ -66,7 +67,8 @@
           "type": "boolean",
           "default": false
         }
-      ]
+      ],
+      "render": true
     }
   },
   "plugins": [
