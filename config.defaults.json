@@ -1,9 +1,10 @@
 {
   "site": {
     "language": "en",
+    "languages": [],
     "theme": "default"
   },
-  "plugins": ["search"],
+  "plugins": ["search", "language-switcher"],
   "pluginOptions": {},
   "services": {}
 }
