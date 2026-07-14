@@ -9,7 +9,13 @@
     "theme": "default",
     "favicon": "/media/brand/favicon.svg",
     "appleTouchIcon": "/media/brand/apple-touch-icon.png",
-    "socialImage": "/media/brand/og-image.png"
+    "socialImage": "/media/brand/og-image.png",
+    "languages": [
+      "en",
+      "de",
+      "fr",
+      "ro"
+    ]
   },
   "collections": {
     "pages": {
