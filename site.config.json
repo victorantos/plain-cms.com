@@ -76,6 +76,12 @@
   },
   "plugins": [
     "search",
-    "reading-time"
-  ]
+    "reading-time",
+    "language-switcher"
+  ],
+  "pluginOptions": {
+    "language-switcher": {
+      "labels": {}
+    }
+  }
 }
