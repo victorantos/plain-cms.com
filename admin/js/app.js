@@ -3,13 +3,15 @@
 // content metadata; writes through the GitHub API (see github.js).
 // UI language rule: never "commit/push/branch" — always "save/publish/history".
 
-import { auth, repoInfo, getFile, updateFile, listDir, commitsFor, runFor, dispatchWorkflow, cmpVersion } from './github.js';
+import { auth, repoInfo, getFile, updateFile, listDir, commitsFor, runFor, dispatchWorkflow, updatePull, mergePull, cmpVersion } from './github.js';
 import { h, show, toast, timeAgo, watchBuild, ask } from './ui.js';
 import { editorScreen } from './editor.js';
 import { mediaScreen } from './media.js';
 import { aiSettings } from './ai.js';
 import { appearanceScreen } from './appearance.js';
 import { pluginsScreen } from './plugins.js';
+import { backendScreen } from './backend.js';
+import { feedbackScreen, insightsScreen } from './backend-data.js';
 import { wizardScreen } from './wizard.js';
 
 let siteInfo = null;             // parsed /api/site.json (schema + site block)
@@ -42,6 +44,9 @@ function shell(active, ...content) {
       link('#/navigation', 'Navigation', 'navigation'),
       link('#/appearance', 'Appearance', 'appearance'),
       link('#/plugins', 'Plugins', 'plugins'),
+      link('#/backend', 'Backend', 'backend'),
+      (siteInfo?.plugins || []).includes('feedback') ? link('#/feedback', 'Feedback', 'feedback') : null,
+      (siteInfo?.plugins || []).includes('sales-analytics') ? link('#/insights', 'Insights', 'insights') : null,
       link('#/settings', 'Settings', 'settings'),
       h('div', { class: 'sidebar-foot' },
         h('a', { href: siteInfo?.site.url || '/', target: '_blank', rel: 'noopener' }, 'View site ↗'),
@@ -189,14 +194,44 @@ async function updateCard() {
     fetch(UPSTREAM_ENGINE).then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
   if (!here || !there || cmpVersion(there.version, here.version) <= 0) return null;
-  return h('section', { class: 'card update' },
+
+  const actions = h('p', { class: 'update-actions' });
+  const card = h('section', { class: 'card update' },
     h('h2', {}, `Update available — v${there.version}`),
     h('p', { class: 'muted' }, `You’re on v${here.version}. The update arrives as a pull request you can review, merge to apply, or revert to undo.`),
-    h('button', { class: 'primary', onclick: async (e) => {
-      e.target.disabled = true;
-      try { await dispatchWorkflow('update.yml'); toast('Preparing your update — a pull request will appear in a minute or two.', 'success'); }
-      catch (error) { toast(error.message, 'error'); e.target.disabled = false; }
-    } }, 'Prepare update'));
+    actions);
+
+  // Once the update.yml workflow has opened the PR, offer to finish it in one
+  // click when it's conflict-free — no trip to GitHub. Otherwise send them to review it.
+  const paint = async () => {
+    const pr = await updatePull().catch(() => null);
+    actions.replaceChildren();
+    if (!pr) {
+      actions.append(h('button', { class: 'primary', onclick: async (e) => {
+        e.target.disabled = true;
+        try { await dispatchWorkflow('update.yml'); toast('Preparing your update — the pull request appears in a minute or two.', 'success'); poll(); }
+        catch (error) { toast(error.message, 'error'); e.target.disabled = false; }
+      } }, 'Prepare update'));
+      return null;
+    }
+    const flagged = Number((pr.body?.match(/needs manual or AI merge \((\d+)\)/) || [])[1] ?? 0);
+    actions.append(h('a', { href: pr.html_url, target: '_blank', rel: 'noopener' }, 'Review the update'));
+    if (pr.mergeable !== false && flagged === 0) {
+      actions.append(h('button', { class: 'primary', onclick: async (e) => {
+        e.target.disabled = true; e.target.textContent = 'Upgrading…';
+        try { await mergePull(pr.number); toast('Upgrade complete — your site is rebuilding on the new version.', 'success'); card.remove(); }
+        catch (error) { toast(`Couldn’t merge automatically — open the update to finish it. (${error.message})`, 'error'); e.target.disabled = false; e.target.textContent = 'Complete upgrade now'; }
+      } }, 'Complete upgrade now'));
+    } else {
+      actions.append(h('span', { class: 'muted' }, flagged ? ` — it changes ${flagged} file${flagged > 1 ? 's' : ''} you’ve edited; review before merging.` : ' — review before merging.'));
+    }
+    return pr;
+  };
+  let tries = 0;
+  const poll = () => { if (++tries <= 10) setTimeout(async () => { if (!await paint()) poll(); }, 12000); };
+
+  await paint();
+  return card;
 }
 
 async function dashboardScreen() {
@@ -341,6 +376,9 @@ const routes = {
   navigation: navigationScreen,
   appearance: async () => shell('appearance', await appearanceScreen(siteInfo)),
   plugins: async () => shell('plugins', await pluginsScreen(siteInfo)),
+  backend: async () => shell('backend', await backendScreen(siteInfo)),
+  feedback: () => shell('feedback', feedbackScreen(siteInfo)),
+  insights: () => shell('insights', insightsScreen(siteInfo)),
   settings: settingsScreen,
   welcome: () => wizardScreen(siteInfo, () => { location.hash = '#/'; route(); }),
 };
@@ -372,6 +410,7 @@ async function boot() {
     location.hash = '#/welcome';
   }
   window.addEventListener('hashchange', route);
+  window.addEventListener('plain:signed-out', route); // gh() fires this on a 401 (dead token) → back to sign-in
   route();
 }
 
