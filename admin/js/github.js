@@ -15,7 +15,9 @@ export const auth = {
     localStorage.setItem(KEYS.token, token);
     localStorage.setItem(KEYS.branch, branch || 'main');
   },
-  clear() { Object.values(KEYS).forEach((key) => localStorage.removeItem(key)); },
+  // Sign out = drop the token (the secret). Keep repo + branch so the sign-in screen
+  // prefills them next time — they're not sensitive and save re-typing owner/name.
+  clear() { localStorage.removeItem(KEYS.token); },
 };
 
 export class GitHubError extends Error {
@@ -23,7 +25,7 @@ export class GitHubError extends Error {
 }
 
 const FRIENDLY = {
-  401: 'GitHub did not accept the access token. It may have expired — sign out and paste a fresh one.',
+  401: 'GitHub didn’t accept the access token (expired, revoked, or mistyped) — please sign in again.',
   403: 'GitHub refused the request. The token may lack access to this repository, or the rate limit is reached — wait a minute and try again.',
   404: 'Not found on GitHub. Check that the repository name is right and the token can read it.',
   409: 'This was edited elsewhere since you opened it.',
@@ -32,9 +34,15 @@ const FRIENDLY = {
 /** Call the GitHub API. Throws GitHubError with a plain-language message. */
 async function gh(path, { method = 'GET', body, raw = false } = {}) {
   const headers = { Authorization: `Bearer ${auth.token}`, 'X-GitHub-Api-Version': '2022-11-28', Accept: raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json' };
-  const response = await fetch(`https://api.github.com${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+  // no-store: GitHub sends `Cache-Control: private, max-age=60`, so without this the
+  // browser serves a stale file sha on a re-read — which made updateFile's 409 retry
+  // loop on the same old sha and surface "edited elsewhere" instead of reconciling.
+  const response = await fetch(`https://api.github.com${path}`, { method, headers, cache: 'no-store', body: body === undefined ? undefined : JSON.stringify(body) });
   if (!response.ok) {
     const detail = await response.json().then((d) => d.message || '').catch(() => '');
+    // 401 = the stored token is dead (expired/revoked). Clear it and signal the app so
+    // it returns to the sign-in screen, instead of dead-ending on an error toast.
+    if (response.status === 401) { auth.clear(); dispatchEvent(new Event('plain:signed-out')); }
     const friendly = FRIENDLY[response.status] || `GitHub error ${response.status}: ${detail}`;
     throw new GitHubError(response.status, detail && !friendly.includes(detail) ? `${friendly} (GitHub said: ${detail})` : friendly);
   }
@@ -176,6 +184,17 @@ export async function runFor(commitSha) {
 
 /** Trigger a workflow_dispatch run (used by the update banner, §14.5). */
 export const dispatchWorkflow = (file, ref = auth.branch) => gh(repoPath(`actions/workflows/${file}/dispatches`), { method: 'POST', body: { ref } });
+
+/** The open engine-update PR the update.yml workflow opens (full object, so it
+    carries `mergeable` and the report `body`), or null if there isn't one yet. */
+export async function updatePull() {
+  const prs = await gh(repoPath('pulls?state=open&per_page=20'));
+  const found = prs.find((p) => /^Update plain to /.test(p.title));
+  return found ? gh(repoPath(`pulls/${found.number}`)) : null;
+}
+
+/** Merge a PR with a merge commit — the update lands on the branch and rebuilds the site. */
+export const mergePull = (number) => gh(repoPath(`pulls/${number}/merge`), { method: 'PUT', body: { merge_method: 'merge' } });
 
 /** Compare dotted semver strings a and b. Returns -1 / 0 / 1. */
 export function cmpVersion(a, b) {
