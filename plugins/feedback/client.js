@@ -29,6 +29,17 @@ function mount() {
     </div>`;
   document.body.append(root);
 
+  // showOnScroll: true (default 200px) or a pixel threshold — the widget is only
+  // visible while the page is scrolled past that point (scrolling back up hides
+  // it again), except while the panel is open: it never vanishes mid-typing.
+  if (cfg.showOnScroll) {
+    const threshold = typeof cfg.showOnScroll === 'number' ? cfg.showOnScroll : 200;
+    const sync = () => root.classList.toggle('pf-waiting',
+      window.scrollY < threshold && root.querySelector('.pf-panel').hidden);
+    window.addEventListener('scroll', sync, { passive: true });
+    sync();
+  }
+
   const toggle = root.querySelector('.pf-toggle');
   const panel = root.querySelector('.pf-panel');
   const open = (yes) => {
