@@ -7,6 +7,13 @@ Websites used to be simple. A folder of files you understood, kept somewhere you
 
 **plain** is a small attempt to get it back.
 
+<p style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin:2rem 0 0.75rem">
+<a class="btn btn-primary btn-large" href="/admin/?demo=1">Try the editor →</a>
+<a class="btn btn-quiet btn-large" href="https://github.com/plain-cms/plain">See the code</a>
+</p>
+
+*No account, no sign-up. The editor opens on a copy of this site inside your browser — write a post, publish it, open the history and restore an older version. Nothing you do there is saved anywhere.*
+
 Your content is ordinary Markdown files in a Git repository. Your settings are one JSON file you can read in a minute. A build turns them into a fast, static website — nothing to keep running, nothing to patch, nothing that falls over at two in the morning.
 
 ## What that means in practice
@@ -24,11 +31,13 @@ The browser admin is a Markdown editor with a live preview beside it — plus me
 
 Or skip it entirely and edit the files in your own editor. Both write to the same place; the files are always the source of truth.
 
+**[Open the editor and try it](/admin/?demo=1)** — no account needed. It is the real admin, writing to a repository that lives in your browser tab.
+
 ## Boring on purpose
 
 There is no clever framework here, no build that needs rewriting every year. plain does a small number of things and expects to still be doing them a decade from now. Boring is what survives.
 
-[Read the longer story](/about/) · [See the code](https://github.com/plain-cms/plain) · [Start your own site](https://github.com/plain-cms/plain/generate)
+[Try the editor](/admin/?demo=1) · [See the code](https://github.com/plain-cms/plain) · [Start your own site](https://github.com/plain-cms/plain/generate) · [Read the longer story](/about/)
 
 ---
 
