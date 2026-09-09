@@ -76,6 +76,7 @@
     "stamp"
   ],
   "services": {},
+  "adminScreens": [],
   "navigation": [
     {
       "label": "Home",
