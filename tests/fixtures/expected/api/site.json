@@ -70,12 +70,33 @@
         }
       ],
       "render": true
+    },
+    "features": {
+      "path": "content/features",
+      "render": false,
+      "sortBy": "order",
+      "sortOrder": "asc",
+      "label": "Features",
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "order",
+          "type": "text"
+        }
+      ],
+      "pageSize": 10
     }
   },
   "plugins": [
     "stamp"
   ],
-  "services": {},
+  "services": {
+    "backend": "https://backend.fixture.test"
+  },
   "adminScreens": [],
   "navigation": [
     {
