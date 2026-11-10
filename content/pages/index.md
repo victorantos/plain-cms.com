@@ -14,6 +14,8 @@ Websites used to be simple. A folder of files you understood, kept somewhere you
 
 *No account, no sign-up. The editor opens on a copy of this site inside your browser — write a post, publish it, open the history and restore an older version. Nothing you do there is saved anywhere.*
 
+**New: coming from WordPress?** Your posts, pages, images, menu and comments move over in one command, and every old link keeps working. [See how →](/blog/moving-from-wordpress/)
+
 Your content is ordinary Markdown files in a Git repository. Your settings are one JSON file you can read in a minute. A build turns them into a fast, static website — nothing to keep running, nothing to patch, nothing that falls over at two in the morning.
 
 ## What that means in practice
