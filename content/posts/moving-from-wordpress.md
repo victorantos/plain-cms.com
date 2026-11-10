@@ -30,6 +30,15 @@ So plain now has a WordPress importer. It does the whole move for you.
 
 That's the move. Your old site can stay up while you look things over. Nothing is written into your repository until you copy it there yourself.
 
+## Then sign in and keep writing
+
+Your admin lives at `/admin/` on your new site. There's no account to create. You give it permission to save to your GitHub repository, in one of two ways:
+
+- **Paste a token.** On GitHub go to **Settings → Developer settings → Fine-grained tokens → Generate new token**. Give it access to only your site's repository, with **Contents: Read and write** (plus **Actions: Read-only** if you want to see build status). Copy it and paste it into `/admin/`. It stays in your browser and is only ever sent to GitHub.
+- **Add a "Sign in with GitHub" button.** Deploy the small free Cloudflare Worker that comes with plain, and every writer signs in with one click instead.
+
+Both are explained step by step in [Signing in to Plain: a pasted token, or one click with GitHub](https://victorantos.com/posts/two-ways-to-sign-in-to-your-plain-admin/).
+
 ## What comes across
 
 - **Posts and pages**, as Markdown files you can read: posts at `/blog/your-post/`, pages at `/your-page/`. A static front page becomes your home page.
